@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Calculadora de Marta</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body>
+  <form id="calculadora">
+    <table>
+      <tr>
+        <td colspan="4"><input type="text" readonly id="resultado"></td>
+      </tr>
+      <tr>
+        <td><button type="button" id="clear" class="operacion">C</button></td>
+        <td><button type="button" id="dividir" class="operacion">/</button></td>
+        <td><button type="button" id="multiplicar" class="operacion">X</button></td>
+        <td rowspan="2"><button type="button" id="restar" class="operacion">-</button></td>
+      </tr>
+      <tr>
+        <td><button type="button">1</button></td>
+        <td><button type="button">2</button></td>
+        <td><button type="button">3</button></td>
+      </tr>
+      <tr>
+        <td><button type="button">4</button></td>
+        <td><button type="button">5</button></td>
+        <td><button type="button">6</button></td>
+        <td rowspan="2"><button type="button" id="sumar" class="operacion">+</button></td>
+      </tr>
+      <tr>
+        <td><button type="button">7</button></td>
+        <td><button type="button">8</button></td>
+        <td><button type="button">9</button></td>
+      </tr>
+      <tr>
+        <td colspan="2"><button type="button">0</button></td>
+        <td colspan="2"><button type="button" id="igual" class="operacion">=</button></td>
+      </tr>
+    </table>
+  </form>
+  <script>
+
+    // variables
+    const calculadora = document.getElementById('calculadora')
+    const resultado = document.getElementById('resultado')
+
+    // eventos
+    calculadora.addEventListener('click', añadirNumeros)
+
+    // operaciones
+    let operaciones = []
+
+    // añadir números
+    function añadirNumeros(e) {
+      if (e.target.getAttribute('type') === 'button') {
+        if (e.target.className != 'operacion') {
+          resultado.value += e.target.innerText
+        }
+        if (e.target.id === 'sumar') {
+          operaciones.push(resultado.value)
+          operaciones.push('+')
+          calculadora.reset()
+        }
+        if (e.target.id === 'igual') {
+          operaciones.push(resultado.value)
+          calculadora.reset()
+          const resultadoOperacion = eval(operaciones.join(''))
+          resultado.value = resultadoOperacion
+          operaciones = []
+        }
+        if (e.target.id === 'restar') {
+          operaciones.push(resultado.value)
+          operaciones.push('-')
+          calculadora.reset()
+        }
+        if (e.target.id === 'multiplicar') {
+          operaciones.push(resultado.value)
+          operaciones.push('*')
+          calculadora.reset()
+        }
+        if (e.target.id === 'dividir') {
+          operaciones.push(resultado.value)
+          operaciones.push('/')
+          calculadora.reset()
+        }
+        if (e.target.id === 'clear') {
+          operaciones = []
+          calculadora.reset()
+        }
+      }
+    }
+  </script>
+
+  <button><a href="index.html">Volver</button></a>
+
+
+</body>
+
+</html>
